@@ -1,4 +1,4 @@
-#Calculator CLI
+# Calculator CLI #
 
 This is a basic command line tool that implements 
 (currently) four basic operators. Order of operations
@@ -8,10 +8,16 @@ only 3 tokens can be entered and only in order
 
 ###### To Run ######
 
-Linux: From the shell, execute the "run" script, using the current directory qualifier
+Linux: 
+
+From the shell, execute the "run" script, using the current directory qualifier.
+
 
     $ ./run
-    
+
+Also make sure that permissions are correct, and that the "run" file is executable.
+
+    $ chmod +x run
 Windows: Execute the "run.cmd" from a command prompt.
 
     > run
