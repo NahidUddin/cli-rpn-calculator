@@ -6,7 +6,16 @@ is not yet implemented, so at this point at most
 only 3 tokens can be entered and only in order 
 (ie, two numbers separated by an operand).
 
-From the command prompt, simply enter "run" in the root directory of the project.
+###### To Run ######
+
+Linux: From the shell, execute the "run" script, using the current directory qualifier
+
+    $ ./run
+    
+Windows: Execute the "run.cmd" from a command prompt.
+
+    > run
+    
 Requires Java 8 to run.
 
 #### Possible operators: 
