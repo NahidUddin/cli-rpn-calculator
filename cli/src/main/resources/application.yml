@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: clie-rpn-calculator
+math:
+  MaximumFractionDigits: 1
+test-mode: false

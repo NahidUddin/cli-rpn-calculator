@@ -1,0 +1,9 @@
+{
+  "properties":[
+    {
+      "name":"math.MaximumFractionDigits",
+      "type":"java.lang.Integer",
+      "description":"Defaults to '1'. This determines the number of digits to the right of the decimal point that will be used before rounding."
+    }
+  ]
+}

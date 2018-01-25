@@ -1,0 +1,4 @@
+spring:
+  application:
+    name: clie-rpn-calculator
+test-mode: true
