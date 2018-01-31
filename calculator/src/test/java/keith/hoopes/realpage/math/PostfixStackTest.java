@@ -11,12 +11,12 @@ import static org.junit.Assert.*;
  *
  * @author J. Keith Hoopes
  */
-public class SessionValueTest{
+public class PostfixStackTest{
 
     @Test
     public void gettersAndSetters(){
 
-        SessionValue value = new SessionValue();
+        PostfixStack value = new PostfixStack();
         assertNotNull("'id' should have default value",
           value.getId());
         assertNotNull("'value' should have a default value",
@@ -24,7 +24,7 @@ public class SessionValueTest{
         assertEquals("'value' should be default to ZERO",
           BigDecimal.ZERO, value.getValue());
         
-        value.setValue(BigDecimal.TEN);
+        value.push(BigDecimal.TEN);
         assertEquals("'value' should be modifiable",
           BigDecimal.TEN, value.getValue());
     }

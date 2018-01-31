@@ -8,15 +8,13 @@ import java.util.stream.Collectors;
 
 public class Calculator{
 
-    /**
-     * The current value.
-     */
-    private final SessionValue currentValue = new SessionValue();
-
     private final Integer maxDecimals;
 
     public Calculator(final Integer maxDecimals){
 
+        if(maxDecimals == null){
+            throw new IllegalArgumentException("'maxDecimals' is required.");
+        }
         this.maxDecimals = maxDecimals;
     }
 
@@ -38,7 +36,7 @@ public class Calculator{
      * @return The results of the {@code command} being executed.
      *
      * @throws CalculationException if the command is not valid. This
-     *   will not effect the current session value.
+     *     will not effect the current session value.
      */
     public String execute(final String command){
 
@@ -65,9 +63,9 @@ public class Calculator{
         assert command != null : "'command' must not be null.";
 
         return Arrays.stream(command.split(" "))
-          .map(String::trim)
-          .filter(c -> c.length() > 0)
-          .collect(Collectors.toList());
+                     .map(String::trim)
+                     .filter(c -> c.length() > 0)
+                     .collect(Collectors.toList());
     }
 
     /**
@@ -80,13 +78,6 @@ public class Calculator{
     private String process(final List<String> commands){
 
         assert commands != null : "Implementation error: commands array was null";
-
-        if(commands.size() == 0){
-            return roundToString(currentValue.getValue());
-        }else if(commands.size() > 3){
-            //TODO: Implement order of operations. For now, we will only ever accept 1,2, or 3 arguments.
-            throw new CalculationException("Too Many Arguments");
-        }
 
         Operand opToPop = null;
 
@@ -107,10 +98,10 @@ public class Calculator{
                     currentValue.setValue(nextVal);
                 }else{
                     currentValue.setValue(
-                      opToPop.execute(
-                        currentValue.getValue(),
-                        nextVal
-                      ));
+                        opToPop.execute(
+                            currentValue.getValue(),
+                            nextVal
+                        ));
                 }
             }else{
                 opToPop = nextOp;

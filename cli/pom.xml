@@ -7,7 +7,7 @@
 
   <parent>
     <groupId>keith.hoopes.realpage</groupId>
-    <artifactId>cli-rpn-calculator</artifactId>
+    <artifactId>postfix-calculator</artifactId>
     <version>0.0.0-SNAPSHOT</version>
   </parent>
 

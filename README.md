@@ -1,4 +1,4 @@
-#Calculator CLI
+#Postfix Calculator CLI
 
 This is a basic command line tool that implements 
 (currently) four basic operators. Order of operations

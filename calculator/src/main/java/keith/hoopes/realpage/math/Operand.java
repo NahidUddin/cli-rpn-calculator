@@ -32,10 +32,12 @@ public enum Operand{
     public static Operand forSymbol(final String symbol){
 
         return Arrays
-          .stream(Operand.values())
-          .filter(o -> o.getSymbol().equals(symbol))
-          .findAny()
-          .orElse(null);
+            .stream(Operand.values())
+            .filter(o -> o.getSymbol().equals(symbol))
+            .findAny()
+            .orElseThrow(() ->
+                new CalculationException("Invalid symbol found: " + symbol)
+            );
     }
 
     public String getSymbol(){
