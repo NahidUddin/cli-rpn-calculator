@@ -1,8 +1,6 @@
 #Postfix Calculator CLI
 
-To run the Postfix Calculator CLI from the command prompt, 
-simply enter "run" in the root directory of the project.
-Requires Java 8 to run.
+This is a simple Postfix expression based calculator API. 
 
 A postfix expression is an expression in which the operands are followed by the operator  
 unlike expressions in the familiar format, where the operator is in between the operands. 
@@ -38,6 +36,29 @@ Not every mathematical operator is implemented in this version at the moment.
  
      > run
 
+## Structure
+
+There are two modules (for now).
+
+The "postfix-calculator" contains the core logic. 
+Extraneous dependencies were avoided (such as importing 
+an entire string utility or popular framework just to use one
+method).
+
+The "cli" module is an implementation of a commandline tool where you can try out
+the various operations that have been implemented.
+
+In the future, it would be great to add a RESTful service that provides an API
+for executing postfix command expressions. With that in mind, and to also allow 
+for other methods of communication, I made sure that the core module could be used
+in any framework, while designing it in such a way as to be usable in a IoC container 
+managed application (i.e. Spring). To verify this, I created the CLI using 
+the Spring Boot framework.
+
+If I were to spend more time on this, I would probably want to create a Spring Boot
+starter project that would automatically configure the application based on dependencies
+and classes that have been included in the classpath. The final application should end up
+as a single class with nothing more than the standard SpringBootApplication annotation.
 
 ## Possible operators
 
