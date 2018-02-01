@@ -3,4 +3,5 @@ spring:
     name: clie-rpn-calculator
 math:
   MaximumFractionDigits: 1
-test-mode: false
+logging:
+  level: error

@@ -1,6 +1,8 @@
 package keith.hoopes.realpage;
 
-import keith.hoopes.realpage.math.Calculator;
+import keith.hoopes.realpage.cli.CLI;
+import keith.hoopes.realpage.math.PostfixCalculator;
+import keith.hoopes.realpage.math.data.GreedyInMemoryPostfixStackRepository;
 import org.junit.Test;
 
 import java.text.DecimalFormat;
@@ -21,7 +23,9 @@ public class CLITest{
         format.setMinimumFractionDigits(0);
         format.setGroupingUsed(false);
 
-        return new CLI(new Calculator(1), true);
+        return new CLI(
+            new GreedyInMemoryPostfixStackRepository(),
+            new PostfixCalculator(1));
     }
 
     @Test
@@ -42,12 +46,12 @@ public class CLITest{
 
         final CLI cli = cli();
 
-        assertEquals("2", cli.execute("1 + 1"));
-        assertEquals("2", cli.execute("1 + 1.0"));
-        assertEquals("3", cli.execute("+ 1"));
-        assertEquals("2.1", cli.execute("1 + 1.1"));
-        assertEquals("2", cli.execute("1 + 1.0"));
-        assertEquals("3.1", cli.execute("+ 1.1"));
+        assertEquals("2", cli.execute("1 1 +"));
+        assertEquals("2", cli.execute("1 1.0 +"));
+        assertEquals("3", cli.execute("1 +"));
+        assertEquals("2.1", cli.execute("1 1.1 +"));
+        assertEquals("2", cli.execute("1 1.0 +"));
+        assertEquals("3.1", cli.execute("1.1 +"));
     }
 
     @Test
@@ -55,10 +59,10 @@ public class CLITest{
 
         final CLI cli = cli();
 
-        assertEquals("0", cli.execute(null));//resets values
-        assertEquals("0", cli.execute("3.1 - 3.1"));
-        assertEquals("-3.1", cli.execute("- 3.1"));
-        assertEquals("-0.1", cli.execute("- -3"));
+        assertEquals("0", cli.execute(null));
+        assertEquals("0", cli.execute("3.1 3.1 -"));
+        assertEquals("-3.1", cli.execute("3.1 -"));
+        assertEquals("-0.1", cli.execute("-3 -"));
 
     }
 
@@ -78,13 +82,21 @@ public class CLITest{
 
         final CLI cli = cli();
 
-        assertEquals("0", cli.execute(null));//reset
-        assertEquals("0", cli.execute("/ 3"));
-        assertEquals("1", cli.execute("3.1 / 3.1"));
-        assertEquals("0.3", cli.execute("/ 3"));//test infinite decimal results
-        assertEquals("-1", cli.execute("3.1 / -3.1"));
+        assertEquals("0", cli.execute(null));
+        assertEquals("0", cli.execute("3 / "));
+        assertEquals("1", cli.execute("3.1 3.1 /"));
+        assertEquals("0.3", cli.execute("3 /"));//test infinite decimal results
+        assertEquals("-1", cli.execute("3.1 -3.1 /"));
+        assertEquals("1", cli.execute("-1 /"));
+        assertEquals("1", cli.execute("1"));
+        assertEquals("Error: Divide by Zero", cli.execute("0 /"));
     }
 
+    @Test
+    public void largeExpressionTest(){
+
+        assertEquals("42", cli().execute("6 5 2 - 4 + *"));
+    }
     @Test
     public void testPrecision(){
 
