@@ -1,4 +1,6 @@
-package keith.hoopes.realpage.math;
+package keith.hoopes.realpage.math.tokens;
+
+import keith.hoopes.realpage.math.PostFixOperator;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -8,26 +10,14 @@ import java.util.Optional;
  *
  * @author J. Keith Hoopes
  */
-public class Token<T>{
+public final class TokenFactory{
 
-    private final T value;
-
-    private Token(final T value){
-
-        if(value instanceof BigDecimal || value instanceof Operand){
-            this.value = value;
-        }
-        throw new CalculationException("Invalid value in Token constructor: " + value);
-    }
-
-    public static Optional<Token> build(final String token){
+    public static Optional<Token> of(final String token){
 
         return Optional.ofNullable(
             convertToBigDecimal(token)
                 .orElseGet(() ->
-                    Optional
-                        .of(Operand.forSymbol(token))
-                        .map(Token::new)
+                    convertOperatorToken(token)
                         .orElse(null)
                 ));
     }
@@ -41,12 +31,21 @@ public class Token<T>{
      */
     private static Optional<Token> convertToBigDecimal(final String targetValue){
 
-        Token<BigDecimal> answer;
+        BigDecimalToken answer;
         try{
-            answer = new Token<>(new BigDecimal(targetValue));
+            answer = BigDecimalToken.create(new BigDecimal(targetValue));
         }catch(NumberFormatException ignored){
             answer = null;
         }
-        return Optional.of(answer);
+        return Optional.ofNullable(answer);
+    }
+
+    private static Optional<Token> convertOperatorToken(final String targetValue){
+
+        return Optional
+            .ofNullable(
+                PostFixOperator.forSymbol(targetValue)
+            )
+            .map(OperatorToken::create);
     }
 }

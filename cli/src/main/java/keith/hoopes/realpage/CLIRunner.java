@@ -1,43 +1,33 @@
 package keith.hoopes.realpage;
 
-import keith.hoopes.realpage.math.Calculator;
+import keith.hoopes.realpage.cli.CLI;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.Banner;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 /**
+ * This was simplified in order to create a more cohesive and flexible design
+ * in the future.
+ *
  * Copyright ${year}
  *
  * @author J. Keith Hoopes
  */
-@SpringBootApplication
+@Component("cliRunner")
 public class CLIRunner implements CommandLineRunner{
 
-  @Autowired
-  private CLI cli;
+    private final CLI cli;
 
-  public static void main(final String[] args){
+    @Autowired
+    public CLIRunner(@Qualifier("cli") final CLI cli){
 
-    SpringApplication app = new SpringApplication(CLIRunner.class);
-    app.setBannerMode(Banner.Mode.OFF);
-    app.run(args);
-  }
+        this.cli = cli;
+    }
 
-  @Bean("cli")
-  public CLI cli(
-    @Value("${math.MaximumFractionDigits:1}") final Integer maximumFractionDigits,
-    @Value("${test-mode:false}") final boolean testMode){
+    @Override
+    public void run(final String... args){
 
-    return new CLI(new Calculator(maximumFractionDigits), testMode);
-  }
-
-  @Override
-  public void run(final String... args){
-
-    cli.run();
-  }
+        cli.run();
+    }
 }

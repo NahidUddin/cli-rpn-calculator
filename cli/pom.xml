@@ -7,7 +7,7 @@
 
   <parent>
     <groupId>keith.hoopes.realpage</groupId>
-    <artifactId>postfix-calculator</artifactId>
+    <artifactId>cli-rpn-calculator</artifactId>
     <version>0.0.0-SNAPSHOT</version>
   </parent>
 
@@ -17,46 +17,16 @@
   <packaging>jar</packaging>
 
   <name>${project.artifactId}</name>
-  <description>${project.groupId}:${project.artifactId}:${project.version}:${project.packaging}</description>
+  <description>${project.groupId}:${project.artifactId}</description>
   <url>${project.parent.url}</url>
 
-  <licenses>
-    <license>
-      <name>MIT</name>
-      <url>https://opensource.org/licenses/MIT</url>
-      <comments>Copyright Xitikit.org ${current.year}</comments>
-    </license>
-  </licenses>
-
-  <developers>
-    <developer>
-      <name>J. Keith Hoopes</name>
-    </developer>
-  </developers>
-
-
-  <profiles>
-    <profile>
-      <id>unit-tests</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <unit-tests.skip>false</unit-tests.skip>
-      </properties>
-    </profile>
-    <profile>
-      <id>integration-tests</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <integration-tests.skip>false</integration-tests.skip>
-      </properties>
-    </profile>
-  </profiles>
-
   <dependencies>
+    <!--Module Dependencies-->
+    <dependency>
+      <groupId>keith.hoopes.realpage</groupId>
+      <artifactId>postfix-calculator</artifactId>
+      <version>0.0.0-SNAPSHOT</version>
+    </dependency>
     <!-- Compile -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -74,10 +44,10 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
     </dependency>
+    <!--Util-->
     <dependency>
-      <groupId>keith.hoopes.realpage</groupId>
-      <artifactId>calculator</artifactId>
-      <version>0.0.0-SNAPSHOT</version>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>findbugs</artifactId>
     </dependency>
     <!-- Test -->
     <dependency>
@@ -85,19 +55,32 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!--TEST-->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-runner</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <!-- To avoid compiler warnings about @API annotations in JUnit code -->
+      <groupId>org.apiguardian</groupId>
+      <artifactId>apiguardian-api</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
     <finalName>cli</finalName>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>versions-maven-plugin</artifactId>
-          <version>2.3</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -138,7 +121,7 @@
         <artifactId>versions-maven-plugin</artifactId>
         <inherited>false</inherited>
         <configuration>
-          <rulesUri>${project.baseUri}/versions-rules.xml</rulesUri>
+          <rulesUri>${project.baseUri}/../versions-rules.xml</rulesUri>
         </configuration>
       </plugin>
     </plugins>
